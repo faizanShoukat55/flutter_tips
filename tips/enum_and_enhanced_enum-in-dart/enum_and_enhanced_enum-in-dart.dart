@@ -1,69 +1,59 @@
-// 🐦 Twitter                   https://twitter.com/vandadnp
-// 🔵 LinkedIn                  https://linkedin.com/in/vandadnp
-// 🎥 YouTube                   https://youtube.com/c/vandadnp
-// 💙 Free Flutter Course       https://linktr.ee/vandadnp
-// 📦 11+ Hours Bloc Course     https://youtu.be/Mn254cnduOY
-// 🔶 7+ Hours MobX Course      https://youtu.be/7Od55PBxYkI
-// 🤝 Want to support my work?  https://buymeacoffee.com/vandad
-
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtools show log;
 
 void main() {
-  runApp(
-    const App(),
-  );
+  runApp(const MyApp());
 }
 
-class App extends StatelessWidget {
-  const App({
-    Key? key,
-  }) : super(key: key);
-
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-typedef Name = String;
-typedef Age = int;
-
-const Map<Name, Age> twoPeople = {
-  'foo': 20,
-  'bar': 30,
-};
-
-extension AddOperator<K, V> on Map<K, V> {
-  Map<K, V> operator +(Map<K, V> other) => {...this}..addAll(other);
-}
-
-extension Log on Object {
-  void log() => devtools.log(toString());
-}
-
-void testIt() {
-  final threePeople = {...twoPeople} + {'baz': 40};
-  threePeople.log(); // {foo: 20, bar: 30, baz: 40}
-  final fourPeople = {...threePeople} + {'qux': 50};
-  fourPeople.log(); // {foo: 20, bar: 30, baz: 40, qux: 50}
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
 
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
   Widget build(BuildContext context) {
-    testIt();
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Map in Flutter',
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('${Season.winter.title}',),
+          ],
         ),
       ),
     );
   }
+}
+
+
+enum Season {
+  winter(title: "winter is here"),
+  spring(title: "Spring is here"),
+  summer(title: "Summer is here"),
+  autumn(title: "Autumn is here");
+
+  const Season({ this.title});
+  final String? title;
 }
